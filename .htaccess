@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    Options -Indexes
+    RewriteEngine On
+
+    # This project must be served from /public. These rules add a defensive
+    # fallback for shared hosting that accidentally points to the project root.
+    RewriteRule (^|/)(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|artisan|AGENTS\.md|README\.md)$ - [F,L,NC]
+    RewriteRule \.(env|ini|log|sql|sqlite|sqlite3|bak|backup)$ - [F,L,NC]
+    RewriteRule ^(app|bootstrap/cache|config|database|resources|routes|storage|tests|vendor|node_modules)(/|$) - [F,L,NC]
+
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
