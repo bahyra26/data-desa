@@ -8,7 +8,7 @@
     # Block sensitive files if they are ever copied into public by mistake.
     RewriteRule (^|/)(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|artisan)$ - [F,L,NC]
     RewriteRule \.(env|ini|log|sql|sqlite|sqlite3|bak|backup|json)$ - [F,L,NC]
-    RewriteRule (^|/)(backups?|database|storage/framework|storage/logs)(/|$) - [F,L,NC]
+    RewriteRule (^|/)(database|storage/framework|storage/logs)(/|$) - [F,L,NC]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

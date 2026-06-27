@@ -30,6 +30,8 @@ class SecurityHeaders
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $csp));
+        // Mencegah browser caching — setiap halaman harus fresh dari server
+        $response->headers->set('Cache-Control', 'no-store, private, must-revalidate');
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');

@@ -31,7 +31,7 @@ class ActivityLogger
             'old_values' => self::cleanValues($oldValues),
             'new_values' => self::cleanValues($newValues),
             'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
+            'user_agent' => substr(preg_replace('/[[:cntrl:]]/', '', $request->userAgent() ?? ''), 0, 500),
         ]);
     }
 

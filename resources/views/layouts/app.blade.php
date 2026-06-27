@@ -301,6 +301,30 @@
             });
         }
 
+        // ── Auto-dismiss flash alerts ──
+        document.querySelectorAll('.alert-success').forEach((alert) => {
+            setTimeout(() => {
+                alert.classList.add('alert-fade-out');
+                setTimeout(() => alert.remove(), 300);
+            }, 4000);
+        });
+
+        // ── Form submit: loading state ──
+        document.querySelectorAll('form').forEach((form) => {
+            form.addEventListener('submit', function (e) {
+                const btn = this.querySelector('button[type="submit"]');
+                if (! btn || btn.disabled) return;
+
+                // Simpan original text
+                if (! btn.dataset.originalText) {
+                    btn.dataset.originalText = btn.innerHTML;
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span> Memproses...';
+            });
+        });
+
         // ── Escape key closes mobile drawer ──
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
