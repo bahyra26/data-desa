@@ -301,27 +301,46 @@
             });
         }
 
-        // ── Auto-dismiss flash alerts ──
+        // ── Auto-dismiss flash alerts with smooth collapse ──
         document.querySelectorAll('.alert-success').forEach((alert) => {
             setTimeout(() => {
                 alert.classList.add('alert-fade-out');
-                setTimeout(() => alert.remove(), 300);
+                setTimeout(() => {
+                    alert.style.maxHeight = '0';
+                    alert.style.marginBottom = '0';
+                    alert.style.paddingTop = '0';
+                    alert.style.paddingBottom = '0';
+                    alert.style.overflow = 'hidden';
+                }, 50);
+                setTimeout(() => alert.remove(), 350);
             }, 4000);
         });
 
         // ── Form submit: loading state ──
+        // IMPORTANT: SEMUA perubahan DOM di-defer ke requestAnimationFrame
+        // agar browser punya waktu penuh mengumpulkan data form dan
+        // memulai navigasi SEBELUM tombol diubah.
         document.querySelectorAll('form').forEach((form) => {
+            let submitting = false;
+
             form.addEventListener('submit', function (e) {
                 const btn = this.querySelector('button[type="submit"]');
-                if (! btn || btn.disabled) return;
-
-                // Simpan original text
-                if (! btn.dataset.originalText) {
-                    btn.dataset.originalText = btn.innerHTML;
+                if (!btn || submitting) {
+                    e.preventDefault();
+                    return;
                 }
+                submitting = true;
 
-                btn.disabled = true;
-                btn.innerHTML = '<span class="spinner"></span> Memproses...';
+                // Defer semua perubahan DOM — jangan ubah apapun
+                // secara sinkronus di dalam event submit handler!
+                requestAnimationFrame(() => {
+                    btn.disabled = true;
+                    btn.classList.add('is-loading');
+                    if (!btn.dataset.originalText) {
+                        btn.dataset.originalText = btn.innerHTML;
+                    }
+                    btn.innerHTML = '<span class="spinner"></span> Memproses...';
+                });
             });
         });
 
@@ -339,10 +358,8 @@
             resizeTimer = setTimeout(() => {
                 const isMobile = window.matchMedia('(max-width: 900px)').matches;
                 if (isMobile) {
-                    // On mobile, ensure sidebar is NOT collapsed visually
                     document.body.classList.remove('sidebar-collapsed');
                 } else {
-                    // On desktop, restore saved collapse state
                     try {
                         const saved = localStorage.getItem('sidebarCollapsed');
                         if (saved === '1') {
@@ -352,7 +369,7 @@
                         }
                     } catch (e) { /* ignore */ }
                 }
-            }, 200);
+            }, 150);
         });
     </script>
 </body>

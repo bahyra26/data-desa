@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // HF Spaces dan proxy lain — percaya semua proxy biar Laravel
+        // bisa generate URL HTTPS yang benar untuk redirect dll.
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             SecurityHeaders::class,
         ]);
