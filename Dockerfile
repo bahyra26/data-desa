@@ -6,6 +6,7 @@ RUN apt-get update \
         libpng-dev \
         libpq-dev \
         libzip-dev \
+        curl \
         unzip \
     && docker-php-ext-install \
         bcmath \

@@ -14,7 +14,20 @@ mkdir -p public/images
 
 if [ ! -f public/images/bg-login.webp ]; then
     echo "==> Download background image..."
-    php /usr/local/bin/setup-images.php 2>/dev/null || echo "  [SKIP] Image setup skipped"
+    mkdir -p public/images
+    curl -sLo /tmp/bg.jpg "https://dpmd.pasuruankab.go.id/storage/file_media/cc16405a863814d5402ea575f2e4d972.jpg" --max-time 20 --insecure 2>/dev/null || true
+    if [ -s /tmp/bg.jpg ]; then
+        php -r "
+            \$img = @imagecreatefromjpeg('/tmp/bg.jpg');
+            if (\$img) { imagewebp(\$img, 'public/images/bg-login.webp', 60); imagedestroy(\$img); }
+        " 2>/dev/null || true
+    fi
+    rm -f /tmp/bg.jpg
+fi
+
+if [ ! -f public/images/logo-pasuruan.png ]; then
+    echo "==> Download logo..."
+    curl -sLo public/images/logo-pasuruan.png "https://upload.wikimedia.org/wikipedia/commons/9/9a/Lambang_Kabupaten_Pasuruan.png" --max-time 20 --insecure 2>/dev/null || true
 fi
 
 # ============================================
