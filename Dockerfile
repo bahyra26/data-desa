@@ -3,11 +3,13 @@ FROM php:8.3-apache AS php-base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libicu-dev \
+        libjpeg-dev \
         libpng-dev \
         libpq-dev \
         libzip-dev \
         curl \
         unzip \
+    && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install \
         bcmath \
         gd \
