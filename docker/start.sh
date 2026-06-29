@@ -12,22 +12,42 @@ rm -f bootstrap/cache/*.php
 # ============================================
 mkdir -p public/images
 
-if [ ! -f public/images/bg-login.webp ]; then
+if [ ! -f public/images/bg-login.jpg ]; then
     echo "==> Download background image..."
     mkdir -p public/images
-    curl -sLo /tmp/bg.jpg "https://dpmd.pasuruankab.go.id/storage/file_media/cc16405a863814d5402ea575f2e4d972.jpg" --max-time 20 --insecure 2>/dev/null || true
-    if [ -s /tmp/bg.jpg ]; then
-        php -r "
-            \$img = @imagecreatefromjpeg('/tmp/bg.jpg');
-            if (\$img) { imagewebp(\$img, 'public/images/bg-login.webp', 60); imagedestroy(\$img); }
-        " 2>/dev/null || true
-    fi
-    rm -f /tmp/bg.jpg
+    curl -sLo public/images/bg-login.jpg "https://dpmd.pasuruankab.go.id/storage/file_media/cc16405a863814d5402ea575f2e4d972.jpg" --max-time 20 --insecure 2>/dev/null || true
 fi
 
-if [ ! -f public/images/logo-pasuruan.png ]; then
-    echo "==> Download logo..."
-    curl -sLo public/images/logo-pasuruan.png "https://upload.wikimedia.org/wikipedia/commons/9/9a/Lambang_Kabupaten_Pasuruan.png" --max-time 20 --insecure 2>/dev/null || true
+if [ ! -f public/images/logo-pasuruan.webp ]; then
+    echo "==> Download & resize logo..."
+    curl -sLo /tmp/logo.png "https://upload.wikimedia.org/wikipedia/commons/9/9a/Lambang_Kabupaten_Pasuruan.png" --max-time 20 --insecure 2>/dev/null || true
+    if [ -s /tmp/logo.png ]; then
+        php -r "
+            \$src = @imagecreatefrompng('/tmp/logo.png');
+            if (\$src) {
+                \$w = imagesx(\$src);
+                \$h = imagesy(\$src);
+                \$maxW = 120;
+                if (\$w > \$maxW) {
+                    \$ratio = \$maxW / \$w;
+                    \$newW = \$maxW;
+                    \$newH = (int)(\$h * \$ratio);
+                } else {
+                    \$newW = \$w;
+                    \$newH = \$h;
+                }
+                \$dst = imagecreatetruecolor(\$newW, \$newH);
+                imagealphablending(\$dst, false);
+                imagesavealpha(\$dst, true);
+                imagecopyresampled(\$dst, \$src, 0, 0, 0, 0, \$newW, \$newH, \$w, \$h);
+                imagewebp(\$dst, 'public/images/logo-pasuruan.webp', 85);
+                imagedestroy(\$src);
+                imagedestroy(\$dst);
+                echo '  -> Logo WebP: ' . round(filesize('public/images/logo-pasuruan.webp') / 1024) . \"KB\\n\";
+            }
+        " 2>/dev/null || true
+    fi
+    rm -f /tmp/logo.png
 fi
 
 # ============================================

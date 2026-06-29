@@ -13,7 +13,7 @@
             <div class="login-card">
                 {{-- Brand header --}}
                 <div class="login-brand">
-                    <img src="{{ asset('images/logo-pasuruan.png') }}" alt="Lambang Kabupaten Pasuruan" class="login-logo">
+                    <img src="{{ asset('images/logo-pasuruan.webp') }}" alt="Lambang Kabupaten Pasuruan" width="120" height="144" class="login-logo">
                     <div class="login-brand-text">
                         <span class="login-brand-title">DINAS PEMBERDAYAAN MASYARAKAT DESA</span>
                         <span class="login-brand-reg">KABUPATEN PASURUAN</span>
@@ -107,7 +107,7 @@
             inset: 0;
             background:
                 linear-gradient(135deg, rgba(10, 22, 40, 0.82) 0%, rgba(19, 35, 58, 0.65) 50%, rgba(10, 22, 40, 0.85) 100%),
-                url("{{ asset('images/bg-login.webp') }}") center / cover no-repeat;
+                url("{{ asset('images/bg-login.jpg') }}") center / cover no-repeat;
             z-index: -1;
         }
 
