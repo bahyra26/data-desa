@@ -8,6 +8,16 @@ sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
 rm -f bootstrap/cache/*.php
 
 # ============================================
+# Download gambar saat startup (gak disimpan di git)
+# ============================================
+mkdir -p public/images
+
+if [ ! -f public/images/bg-login.webp ]; then
+    echo "==> Download background image..."
+    php /usr/local/bin/setup-images.php 2>/dev/null || echo "  [SKIP] Image setup skipped"
+fi
+
+# ============================================
 # Konfigurasi database — pilih otomatis
 # ============================================
 if [ -n "$DB_HOST" ]; then
