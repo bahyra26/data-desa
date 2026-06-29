@@ -54,6 +54,10 @@ COPY docker/start.sh /usr/local/bin/start
 RUN chmod +x /usr/local/bin/start \
     && chown -R www-data:www-data storage bootstrap/cache database
 
+# Generate images during build (not stored in git — HF blocks binary files)
+COPY docker/setup-images.php /tmp/setup-images.php
+RUN php /tmp/setup-images.php && rm /tmp/setup-images.php
+
 EXPOSE 7860
 
 CMD ["start"]

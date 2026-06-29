@@ -14,7 +14,7 @@
         <div class="admin-shell">
             <aside class="sidebar" id="adminSidebar" aria-label="Navigasi admin">
                 <a href="{{ route('dashboard') }}" class="sidebar-brand">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Lambang_Kabupaten_Pasuruan.png" alt="Lambang Kabupaten Pasuruan" class="sidebar-logo">
+                    <img src="{{ asset('images/logo-pasuruan.png') }}" alt="Lambang Kabupaten Pasuruan" class="sidebar-logo">
                     <span class="sidebar-brand-text">
                         <span class="sidebar-brand-title">DINAS PEMBERDAYAAN</span>
                         <span class="sidebar-brand-sub">MASYARAKAT DESA</span>

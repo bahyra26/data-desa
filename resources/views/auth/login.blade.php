@@ -13,7 +13,7 @@
             <div class="login-card">
                 {{-- Brand header --}}
                 <div class="login-brand">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Lambang_Kabupaten_Pasuruan.png" alt="Lambang Kabupaten Pasuruan" class="login-logo">
+                    <img src="{{ asset('images/logo-pasuruan.png') }}" alt="Lambang Kabupaten Pasuruan" class="login-logo">
                     <div class="login-brand-text">
                         <span class="login-brand-title">DINAS PEMBERDAYAAN MASYARAKAT DESA</span>
                         <span class="login-brand-reg">KABUPATEN PASURUAN</span>
@@ -107,7 +107,7 @@
             inset: 0;
             background:
                 linear-gradient(135deg, rgba(10, 22, 40, 0.82) 0%, rgba(19, 35, 58, 0.65) 50%, rgba(10, 22, 40, 0.85) 100%),
-                url("https://dpmd.pasuruankab.go.id/storage/file_media/cc16405a863814d5402ea575f2e4d972.jpg") center / cover no-repeat;
+                url("{{ asset('images/bg-login.webp') }}") center / cover no-repeat;
             z-index: -1;
         }
 
