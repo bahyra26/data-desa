@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-export PORT="${PORT:-8080}"
+export PORT="${PORT:-7860}"
 
 sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
 

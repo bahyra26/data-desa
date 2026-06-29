@@ -54,6 +54,6 @@ COPY docker/start.sh /usr/local/bin/start
 RUN chmod +x /usr/local/bin/start \
     && chown -R www-data:www-data storage bootstrap/cache database
 
-EXPOSE 8080
+EXPOSE 7860
 
 CMD ["start"]
