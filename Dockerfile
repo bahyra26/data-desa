@@ -52,7 +52,7 @@ COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 COPY docker/start.sh /usr/local/bin/start
 
 RUN chmod +x /usr/local/bin/start \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache database
 
 EXPOSE 8080
 
